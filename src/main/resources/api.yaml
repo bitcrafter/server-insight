@@ -1,0 +1,68 @@
+swagger: "2.0"
+info:
+  description: Know more abou your server with this awesome API.
+  version: "1.1.0"
+  title: Server Insight API
+schemes:
+  - "http"
+tags:
+  - name: "info"
+    description: "Basic information about the server"
+  - name: "connectivity"
+    description: "Basic information about the server"
+paths:
+  /host:
+    get:
+      tags:
+        - "info"
+      summary: "Get Server Information"
+      operationId: "host"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/Host"
+  /ping/{host}:
+    get:
+      tags:
+        - "connectivity"
+      summary: "Verify if server can reach another host"
+      operationId: "ping"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "host"
+        in: "path"
+        description: "Host name or IPv4 to reach"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "success"
+          schema:
+            $ref: "#/definitions/Ping"
+definitions:
+  Host:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "localhost"
+        description: "Hostname from server"
+      ip:
+        type: "string"
+        example: "127.0.0.1"
+        description: "IPv4 from server"
+  Ping:
+    type: "object"
+    properties:
+      host:
+        type: "string"
+        example: "www.google.com"
+        description: "Tried host"
+      reachble:
+        type: "boolean"
+        example: true
+        description: "true if host is reachble, false otherwise"
